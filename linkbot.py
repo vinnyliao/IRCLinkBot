@@ -196,7 +196,9 @@ class LinkBot(irc.IRCClient):
             return
 
         try:
-            response = urllib2.urlopen(url)
+            opener = urllib2.build_opener()
+            opener.addheaders = [('User-agent', 'Mozilla/5.0')]
+            response = opener.open(url)
             page = response.read()
             titleMatch = self.titleRegex.search(page)
             title = titleMatch.group("title")
